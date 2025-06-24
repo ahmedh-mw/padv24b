@@ -23,7 +23,6 @@ jobs:
     env:
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
-      BUILD_FOLDER: "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,14 +31,14 @@ jobs:
           fetch-depth: 0
       - name: Copy build files
         run: |
-          mkdir "${{ env.BUILD_FOLDER }}" 
-          cp ".github/workflows/ir_dag.json" "${{ env.BUILD_FOLDER }}/" 
-          cp ".github/workflows/simulink_pipeline.yml" "${{ env.BUILD_FOLDER }}/" 
+          mkdir "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}"
+          cp ".github/workflows/ir_dag.json" "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/" 
+          cp ".github/workflows/simulink_pipeline.yml" "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/" 
       - name: Upload build files
         uses: actions/upload-artifact@v4
         with:
           name: build_files
-          path: ${{ env.BUILD_FOLDER }}/
+          path: ${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/
   
   start:
     needs: [build_files]
