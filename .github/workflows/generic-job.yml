@@ -20,7 +20,6 @@ jobs:
       WORKSPACE_TEMP_PATH_KEY: RUNNER_TEMP
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
-      BUILD_FOLDER: "${{PROJECT_RELATIVE_PATH}}${{BUILD_FOLDER_NAME}}"
       SUPPORT_PACKAGE_ROOT: ${{ vars.SUPPORT_PACKAGE_ROOT }}
       CI_UTIL: "${{ vars.SUPPORT_PACKAGE_ROOT }}/toolbox/padv/pipeline_generator/ci"
       ARTIFACT_SERVICE_MODE: ${{ vars.ARTIFACT_SERVICE_MODE || 'network' }}
@@ -45,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build_files
-          path: ${{ env.BUILD_FOLDER }}
+          path: ${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}
 
       - name: Load environment variables
         run: "${{ env.PYTHON_ALIAS }} ${{ env.CI_UTIL }}/py/prepare.py --clean_temp_build_area --jobname \"${{ inputs.job-name }}\" --pipeline_prepare --platform github"
