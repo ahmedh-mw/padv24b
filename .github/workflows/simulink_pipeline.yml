@@ -23,7 +23,7 @@ jobs:
     env:
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
-      BUILD_FOLDER: "${{vars.PROJECT_RELATIVE_PATH}}${{vars.BUILD_FOLDER_NAME}}"
+      BUILD_FOLDER: "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
