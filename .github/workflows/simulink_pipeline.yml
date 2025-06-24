@@ -31,20 +31,17 @@ jobs:
           fetch-depth: 0
       - name: Copy build files
         run: |
-          echo "${PROJECT_RELATIVE_PATH}"
-          echo "$PROJECT_RELATIVE_PATH"
-          echo "${BUILD_FOLDER_NAME}"
-          echo "$BUILD_FOLDER_NAME"
-          echo "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}"
-          echo "$PROJECT_RELATIVE_PATH$BUILD_FOLDER_NAME"
-          mkdir "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}"
-          cp ".github/workflows/ir_dag.json" "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/" 
-          cp ".github/workflows/simulink_pipeline.yml" "${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/" 
+          echo "PROJECT_RELATIVE_PATH = ${{env.PROJECT_RELATIVE_PATH}}"
+          echo "BUILD_FOLDER_NAME = ${{env.BUILD_FOLDER_NAME}}"
+          echo "Build_Folder = ${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
+          mkdir "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
+          cp ".github/workflows/ir_dag.json" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 
+          cp ".github/workflows/simulink_pipeline.yml" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 
       - name: Upload build files
         uses: actions/upload-artifact@v4
         with:
           name: build_files
-          path: ${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}/
+          path: ${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/
   
   start:
     needs: [build_files]

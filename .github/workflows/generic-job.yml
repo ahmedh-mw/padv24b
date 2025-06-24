@@ -44,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build_files
-          path: ${PROJECT_RELATIVE_PATH}${BUILD_FOLDER_NAME}
+          path: ${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}
 
       - name: Load environment variables
         run: "${{ env.PYTHON_ALIAS }} ${{ env.CI_UTIL }}/py/prepare.py --clean_temp_build_area --jobname \"${{ inputs.job-name }}\" --pipeline_prepare --platform github"
