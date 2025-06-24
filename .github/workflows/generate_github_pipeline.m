@@ -3,13 +3,13 @@
 op = padv.pipeline.GitHubOptions;
 op.PipelineArchitecture = "IndependentModelPipelines";
 op.GeneratorVersion = 2;
-op.MatlabInstallationLocation = matlabInstallationLocation;
-op.RunnerLabels = runnerLabels;
+op.MatlabInstallationLocation = "C:/Program Files/MATLAB/R2024b/bin";
+op.RunnerLabels = "padv_win_agents";
 op.GeneratedPipelineDirectory = "_build_";
 op.StopOnStageFailure = true;
 op.RunprocessCommandOptions.GenerateJUnitForProcess = true;
 op.ReportPath = "$PROJECTROOT$/PA_Results/Report/PadvReport";
-op.ProjectToRepoPath = projectToRepoPath;
+op.ProjectToRepoPath = "";
 
 % Docker image settings
 op.UseMatlabPlugin = false;
