@@ -31,9 +31,6 @@ jobs:
           fetch-depth: 0
       - name: Copy build files
         run: |
-          echo "PROJECT_RELATIVE_PATH = ${{env.PROJECT_RELATIVE_PATH}}"
-          echo "BUILD_FOLDER_NAME = ${{env.BUILD_FOLDER_NAME}}"
-          echo "Build_Folder = ${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
           mkdir "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
           cp ".github/workflows/ir_dag.json" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 
           cp ".github/workflows/simulink_pipeline.yml" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 

@@ -15,7 +15,6 @@ jobs:
     runs-on: ${{ vars.RUNNER_LABEL }}
     env:
       PYTHON_ALIAS: ${{ vars.PYTHON_ALIAS || 'python' }}
-      USE_MATLAB_PLUGIN: ${{ vars.USE_MATLAB_PLUGIN || 'false' }}
       SUBMODULES_MODE: ${{ vars.SUBMODULES_MODE || 'false' }}
       WORKSPACE_PATH_KEY: GITHUB_WORKSPACE
       WORKSPACE_TEMP_PATH_KEY: RUNNER_TEMP

@@ -13,7 +13,7 @@
     "RunnerLabels": "padv_win_agents",
     "RetentionDays": "30",
     "GeneratedYMLFileName": "simulink_pipeline",
-    "UseMatlabPlugin": true,
+    "UseMatlabPlugin": false,
     "EnableArtifactCollection": "always",
     "ShellEnvironment": "bash",
     "CheckoutSubmodules": "false",

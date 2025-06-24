@@ -10,6 +10,7 @@ op.StopOnStageFailure = true;
 op.RunprocessCommandOptions.GenerateJUnitForProcess = true;
 op.ReportPath = "$PROJECTROOT$/PA_Results/Report/PadvReport";
 op.ProjectToRepoPath = "";
+op.UseMatlabPlugin = false;
 
 % Docker image settings
 op.UseMatlabPlugin = false;

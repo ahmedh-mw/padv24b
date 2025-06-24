@@ -19,7 +19,6 @@ jobs:
       #   - <host path>:<container path>
     env:
       PYTHON_ALIAS: ${{ vars.PYTHON_ALIAS || 'python' }}
-      USE_MATLAB_PLUGIN: ${{ vars.USE_MATLAB_PLUGIN || 'false' }}
       SUBMODULES_MODE: ${{ vars.SUBMODULES_MODE || 'false' }}
       WORKSPACE_PATH_KEY: GITHUB_WORKSPACE
       WORKSPACE_TEMP_PATH_KEY: RUNNER_TEMP
@@ -51,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build_files
-          path: ${{ env.BUILD_FOLDER }}
+          path: ${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}
 
       - name: Load environment variables
         run: "${{ env.PYTHON_ALIAS }} ${{ env.CI_UTIL }}/py/prepare.py --clean_temp_build_area --jobname \"${{ inputs.job-name }}\" --pipeline_prepare --platform github"
