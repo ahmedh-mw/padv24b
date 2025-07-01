@@ -10,7 +10,7 @@
   "ReportOutputPath": "PA_Results/Report",
   "HasNestedParallelBranches": false,
   "Options": {
-    "RunnerLabels": "padv_wsl_agents",
+    "RunnerLabels": "padv_win_agents",
     "RetentionDays": "30",
     "GeneratedYMLFileName": "simulink_pipeline",
     "UseMatlabPlugin": false,
@@ -42,7 +42,8 @@
       "RerunErroredTasks": false
     },
     "PipelineArchitecture": "IndependentModelPipelines",
-    "MatlabLaunchCmd": "xvfb-run -a matlab-batch",
+    "MatlabLaunchCmd_bak": "xvfb-run -a matlab-batch",
+    "MatlabLaunchCmd": "matlab-batch",
     "MatlabStartupOptions": "",
     "AddBatchStartupOption": false,
     "GeneratedPipelineDirectory": "_build_",
@@ -52,7 +53,7 @@
     "StopOnStageFailure": true,
     "CheckOutdatedResultsAfterMerge": true,
     "EnablePipelineCaching": true,
-    "MatlabInstallationLocation": "matlab_installation_location",
+    "MatlabInstallationLocation": "C:/Program Files/MATLAB/R2024b/bin",
     "ArtifactZipFileName": "padv_artifacts.zip",
     "GeneratorVersion": 2,
     "EnableOpenTelemetry": false,
