@@ -13,10 +13,8 @@ jobs:
   Generic-Job:
     name: Generic Job
     runs-on: ${{ vars.RUNNER_LABEL }}
-    # container:
-      # image: ${{ vars.IMAGE_TAG }}  
-      # volumes:
-      #   - <host path>:<container path>
+    container:
+      image: ${{ vars.IMAGE_TAG }}
     env:
       PYTHON_ALIAS: ${{ vars.PYTHON_ALIAS || 'python' }}
       SUBMODULES_MODE: ${{ vars.SUBMODULES_MODE || 'false' }}
@@ -37,7 +35,7 @@ jobs:
       AZ_CONTAINER_NAME: ${{ vars.AZ_CONTAINER_NAME }}
       AZ_CONNECTION_STRING: ${{ secrets.AZ_CONNECTION_STRING_SECRET }}
       MLM_LICENSE_TOKEN: ${{ secrets.MLM_LICENSE_TOKEN_SECRET }}
-      # HOME: /home/matlab
+      HOME: /home/matlab
 
     steps:
       - name: Checkout code
