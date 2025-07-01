@@ -60,7 +60,7 @@ jobs:
 
       - name: Execute Job Tasks
         if: ${{ (env.ENABLE_CI_DRYRUN == 'true') || (env.USE_MATLAB_PLUGIN != 'true') }}
-        run: "$RUNNER_TEMP/${{ env.BUILD_FOLDER_NAME }}/shell_commands"
+        run: "$RUNNER_TEMP\/${{ env.BUILD_FOLDER_NAME }}\/shell_commands"
         
       # - name: Execute Job Tasks using MATLAB plugin
       #   if: ${{ (env.ENABLE_CI_DRYRUN != 'true') && (env.USE_MATLAB_PLUGIN == 'true') }}
