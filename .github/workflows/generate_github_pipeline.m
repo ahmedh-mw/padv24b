@@ -18,13 +18,13 @@ function generate_github_pipeline(workspace, projectToRepoPath, matlabInstallati
     op.StopOnStageFailure = true;
     op.RunprocessCommandOptions.GenerateJUnitForProcess = true;
     op.ReportPath = "$PROJECTROOT$/PA_Results/Report/PadvReport";
-    op.ProjectToRepoPath = projectToRepoPath;                       % ""
+    op.ProjectToRepoPath = projectToRepoPath;                       % "" or "level1-a/level2/ProcessAdvisorProjectReferenceExample/"
     op.UseMatlabPlugin = false;
     
     % Docker image settings
     % examples: "matlab", "matlab-batch", "xvfb-run -a matlab", "xvfb-run -a matlab-batch"
-    % op.MatlabLaunchCmd = "xvfb-run -a matlab-batch";
-    % op.MatlabStartupOptions = "";
-    % op.AddBatchStartupOption = false;
-    % padv.pipeline.generatePipeline(op, "CIPipeline");
+    op.MatlabLaunchCmd = "xvfb-run -a matlab-batch";
+    op.MatlabStartupOptions = "";
+    op.AddBatchStartupOption = false;
+    padv.pipeline.generatePipeline(op, "CIPipeline");
 end

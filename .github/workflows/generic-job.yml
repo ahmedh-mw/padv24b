@@ -13,6 +13,10 @@ jobs:
   Generic-Job:
     name: Generic Job
     runs-on: ${{ vars.RUNNER_LABEL }}
+    container:
+      image: ${{ vars.IMAGE_TAG }}  
+      # volumes:
+      #   - <host path>:<container path>
     env:
       PYTHON_ALIAS: ${{ vars.PYTHON_ALIAS || 'python' }}
       SUBMODULES_MODE: ${{ vars.SUBMODULES_MODE || 'false' }}
@@ -32,6 +36,8 @@ jobs:
       S3_AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_AWS_SECRET_ACCESS_KEY_SECRET }}
       AZ_CONTAINER_NAME: ${{ vars.AZ_CONTAINER_NAME }}
       AZ_CONNECTION_STRING: ${{ secrets.AZ_CONNECTION_STRING_SECRET }}
+      MLM_LICENSE_TOKEN: ${{ secrets.MLM_LICENSE_TOKEN_SECRET }}
+      HOME: /home/matlab
 
     steps:
       - name: Checkout code
@@ -54,13 +60,13 @@ jobs:
 
       - name: Execute Job Tasks
         if: ${{ (env.ENABLE_CI_DRYRUN == 'true') || (env.USE_MATLAB_PLUGIN != 'true') }}
-        run: "${{ runner.temp }}/${{ env.BUILD_FOLDER_NAME }}/shell_commands"
+        run: "$RUNNER_TEMP/${{ env.BUILD_FOLDER_NAME }}/shell_commands"
         
       # - name: Execute Job Tasks using MATLAB plugin
       #   if: ${{ (env.ENABLE_CI_DRYRUN != 'true') && (env.USE_MATLAB_PLUGIN == 'true') }}
       #   uses: matlab-actions/run-command@v2
       #   with:
-      #     command: "addpath('${{ runner.temp }}/${{ env.BUILD_FOLDER_NAME }}');matlab_job_commands"
+      #     command: "addpath('$RUNNER_TEMP/${{ env.BUILD_FOLDER_NAME }}');matlab_job_commands"
 
       - name: Upload Job Artifacts
         run: "${{ env.PYTHON_ALIAS }} ${{ env.CI_UTIL }}/py/job_delta_upload.py --jobname \"${{ inputs.job-name }}\" --job_status \"${{ job.status }}\" --skip_compression"

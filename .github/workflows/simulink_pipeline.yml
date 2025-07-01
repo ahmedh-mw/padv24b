@@ -20,9 +20,12 @@ on: # You must define at least one trigger for each workflow.
 jobs:
   build_files:
     runs-on: ${{ vars.RUNNER_LABEL }}
+    container:
+      image: ${{ vars.IMAGE_TAG }}
     env:
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
+      HOME: /home/matlab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,7 +34,7 @@ jobs:
           fetch-depth: 0
       - name: Copy build files
         run: |
-          mkdir "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}"
+          mkdir "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}" 
           cp ".github/workflows/ir_dag.json" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 
           cp ".github/workflows/simulink_pipeline.yml" "${{env.PROJECT_RELATIVE_PATH}}${{env.BUILD_FOLDER_NAME}}/" 
       - name: Upload build files
