@@ -6,7 +6,7 @@
 #   ARTIFACT_SERVICE_MODE, S3_BUCKET_NAME, S3_AWS_ACCESS_KEY_ID, S3_AWS_SECRET_ACCESS_KEY_SECRET
 # To enable Azure Blob storage services, you need to configure the following variables as repository variables:
 #   ARTIFACT_SERVICE_MODE, AZ_CONTAINER_NAME, AZ_CONNECTION_STRING_SECRET
-name: GitHub MATLAB Workflow - PADV24b
+name: GitHub MATLAB Workflow
 on: # You must define at least one trigger for each workflow.
   workflow_dispatch:  # Set manual triggers as an optional trigger.
   pull_request:       # Set pull_request as an automatic trigger. 
