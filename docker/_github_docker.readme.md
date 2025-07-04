@@ -79,7 +79,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /va
 
 Add new self-hosted runner using the project settings screen at Runners section.
 ```
-mkdir ~/runners/gh/gh01
+mkdir -p ~/runners/gh/gh01
 cd ~/runners/gh/gh01
 curl -o actions-runner-linux-x64-2.325.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.325.0/actions-runner-linux-x64-2.325.0.tar.gz
 tar xzf ./actions-runner-linux-x64-2.325.0.tar.gz
