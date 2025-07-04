@@ -20,12 +20,12 @@ on: # You must define at least one trigger for each workflow.
 jobs:
   build_files:
     runs-on: ${{ vars.RUNNER_LABEL }}
-    # container:
-      # image: ${{ vars.IMAGE_TAG }}
+    container:
+      image: ${{ vars.IMAGE_TAG }}
     env:
+      HOME: /home/matlab
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
-      # HOME: /home/matlab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
