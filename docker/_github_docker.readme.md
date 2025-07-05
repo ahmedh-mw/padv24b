@@ -94,7 +94,7 @@ In CI environemnts, MATLAB batch licensing token is the recommended way to licen
 
 At the generated pipeline, make sure to uncomment the container configuration section and HOME environment variable under build_files job, you also need to do the same for generic-job.yml at Generic-Job definition.
 
-> **_NOTE:_** GitHub Actions runner set container HOME environment variable to /github/home. That is why it is important to set HOME environment variable at the pipeline files.
+> **_NOTE:_** GitHub Actions runner set container HOME environment variable to /github/home. That is why it is important to adjust HOME environment variable at the pipeline files.
 
 At repository variables section under the project settings, you need to set IMAGE_TAG variable and to review RUNNER_LABEL, and SUPPORT_PACKAGE_ROOT variables. This image tag will be used for all the pipeline jobs.
 
