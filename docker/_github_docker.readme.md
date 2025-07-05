@@ -23,7 +23,7 @@ docker buildx build -f non-interactive.Dockerfile `
 > **_NOTE:_** Default docker file has ENTRYPOINT value equal to "xvfb-run" which may not be suitable for generic purpose senatios
 
 ## 1.2 Build PADV CI docker image
-This image add a top layer to the non-interactive image by adding the following libraries and CLIs: python3, git client, JFrog cli, Azure cli, AWS cli. This layer also clear the default docker image ENTRYPOINT value for better flexibility.
+This image add a top layer to the non-interactive image by adding the following libraries and CLIs: python3, git client, JFrog cli, Azure cli, AWS cli. This layer also set the HOME environment variable and clear the default docker image ENTRYPOINT value for better flexibility.
 
 You can use 'ci-addons.Dockerfile' to build this image using the following script
 ```

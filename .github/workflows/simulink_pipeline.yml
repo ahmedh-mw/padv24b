@@ -23,7 +23,6 @@ jobs:
     container:
       image: ${{ vars.IMAGE_TAG }}
     env:
-      HOME: /home/matlab
       BUILD_FOLDER_NAME: ${{ vars.BUILD_FOLDER_NAME || '_build_' }}
       PROJECT_RELATIVE_PATH: ${{ vars.PROJECT_RELATIVE_PATH || '' }}
     steps:

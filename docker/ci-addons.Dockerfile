@@ -24,4 +24,5 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
         sudo ./aws/install && \
         sudo rm -rf awscliv2.zip aws
 
+ENV HOME=/home/matlab
 ENTRYPOINT [""]
