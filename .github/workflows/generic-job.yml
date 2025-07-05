@@ -16,6 +16,7 @@ jobs:
     container:
       image: ${{ vars.IMAGE_TAG }}  
     env:
+      HOME: /home/matlab
       PYTHON_ALIAS: ${{ vars.PYTHON_ALIAS || 'python' }}
       SUBMODULES_MODE: ${{ vars.SUBMODULES_MODE || 'false' }}
       WORKSPACE_PATH_KEY: GITHUB_WORKSPACE
