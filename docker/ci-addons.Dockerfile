@@ -24,4 +24,21 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
         sudo ./aws/install && \
         sudo rm -rf awscliv2.zip aws
 
+###############################################
+#      Support Azure DevOps container job
+##############################################
+# Install Node.js LTS and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo /bin/bash - \
+    && sudo apt-get install -y nodejs \
+    && sudo apt-get clean \
+    && sudo rm -rf /var/lib/apt/lists/*
+
+RUN sudo chmod u+s /usr/sbin/groupadd /usr/sbin/usermod && \
+    sudo touch /etc/sudoers && \
+    sudo chmod u+w /etc/sudoers && \
+    sudo rm -f /bin/su && \
+    sudo bash -c "echo '#!/usr/bin/env bash' > /bin/su" && \
+    sudo bash -c "echo \"echo 'su has been disabled in this container'\" >> /bin/su"  && \
+    sudo chmod +x /bin/su
+
 ENTRYPOINT [""]

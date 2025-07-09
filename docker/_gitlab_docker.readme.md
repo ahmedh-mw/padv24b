@@ -41,7 +41,7 @@ docker build -f ci-addons.Dockerfile `
     --build-arg BASE_IMAGE="$CONTAINER_REGISTRY/$PADV_IMAGE_NAME" `
     -t $CONTAINER_REGISTRY/$PADV_CI_IMAGE_NAME .
 ```
-# 2. Configure your gitlab runner
+# 2. Configure your GitLab runner
 Pipeline generation supports running padv docker images in GitLab CI using Docker executor approach. GitLab Docker executor uses Docker Engine to run each job in a separate and isolated container. To connect to Docker Engine, the executor uses:
 + The image you define in .gitlab-ci.yml.
 + The configurations you define in the runner config.toml.

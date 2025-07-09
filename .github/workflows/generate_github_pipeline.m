@@ -1,14 +1,14 @@
 % Copyright 2025 The MathWorks, Inc.
 
-function generate_github_pipeline(workspace, projectToRepoPath, matlabInstallationLocation, runnerLabels, build_folder)
+function generate_github_pipeline(workspace, projectRelativePath, matlabInstallationLocation, runnerLabels, build_folder)
     arguments
         workspace = pwd;
-        projectToRepoPath = "";
+        projectRelativePath = "";
         matlabInstallationLocation = "matlab_bin_path";
         runnerLabels = "github_runner_labels";
         build_folder = "_build_"
     end
-    cp = openProject(strjoin({workspace,projectToRepoPath} , filesep));
+    cp = openProject(strcat(workspace,filesep,projectRelativePath));
     op = padv.pipeline.GitHubOptions;
     op.PipelineArchitecture = "IndependentModelPipelines";
     op.GeneratorVersion = 2;
@@ -18,10 +18,10 @@ function generate_github_pipeline(workspace, projectToRepoPath, matlabInstallati
     op.StopOnStageFailure = true;
     op.RunprocessCommandOptions.GenerateJUnitForProcess = true;
     op.ReportPath = "$PROJECTROOT$/PA_Results/Report/PadvReport";
-    op.ProjectToRepoPath = projectToRepoPath;                       % "" or "level1-a/level2/ProcessAdvisorProjectReferenceExample/"
-    op.UseMatlabPlugin = false;
+    op.ProjectRelativePath = projectRelativePath;                       % "" or "level1-a/level2/ProcessAdvisorProjectReferenceExample/"
     
     % Docker image settings
+    op.UseMatlabPlugin = false;
     % examples: "matlab", "matlab-batch", "xvfb-run -a matlab", "xvfb-run -a matlab-batch"
     op.MatlabLaunchCmd = "xvfb-run -a matlab-batch";
     op.MatlabStartupOptions = "";
