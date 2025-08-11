@@ -35,6 +35,7 @@ node('padv_win_agents'){
 
             // Generating Process Advisor's process pipeline
             pipelineUtils.runShellCommand("matlab -batch \"addpath('$WORKSPACE/pipelines');generate_jenkins_pipeline();\"", isUnixEnvironment);
+            bat("echo ${pipelineGenerationPath}");
             stash(includes:"${pipelineGenerationPath}/**", name:'pipeline_generated_files');
             archiveArtifacts artifacts: "${pipelineGenerationPath}/**", allowEmptyArchive: true
             pipelineUtils.loadEnvVariables(isUnixEnvironment, scmVars.GIT_COMMIT);
