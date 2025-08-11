@@ -20,7 +20,7 @@ node('padv_win_agents'){
     }
     
     // withCredentials([string( credentialsId: 'MLM_LICENSE_TOKEN_SECRET',variable: 'mlm_license_token')]) {
-    //     env.MLM_LICENSE_TOKEN = mlm_license_token;
+    //     env.MLM_LICENSE_TOKEN = mlm_license_token; 
     // }
 
     def pipelineGenerationPath = "${env.MW_RELATIVE_PROJECT_PATH?:''}${env.MW_PIPELINE_GEN_DIRECTORY}";
