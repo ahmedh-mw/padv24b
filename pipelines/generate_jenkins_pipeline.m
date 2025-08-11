@@ -19,7 +19,7 @@ function generate_jenkins_pipeline()
     op.ReportPath = "$PROJECTROOT$/PA_Results/Report/ProcessAdvisorReport";
     op.RelativeProjectPath = relativeProjectPath;
     op.RemoteBuildCacheName = remoteBuildCacheName;
-    op.CacheFallbackBranches = ["master", "develop"];
+    op.CacheFallbackBranches = ["master", "main", "develop"];
 
     op.ArtifactServiceMode = 'azure_blob';         % network/jfrog/s3/azure_blob
     % op.NetworkStoragePath = '<Artifactory network storage path>';
