@@ -1,7 +1,7 @@
 // Copyright 2025 The MathWorks, Inc.
 node('padv_win_agents'){
     // For the online configuration guide visit: https://www.mathworks.com/help/slcheck/padv/ug/integrate-process-into-jenkins-with-artifact-management.html
-    env.MW_SUPPORT_PACKAGE_ROOT = 'D:/sb/Bslcicd_0805/matlab'
+    env.MW_SUPPORT_PACKAGE_ROOT = 'D:/sb/r24b0811/matlab'
     // env.MW_RELATIVE_PROJECT_PATH = "level1-a/level2/ProcessAdvisorProjectReferenceExample/";  // e.g. "" or "relative/path/to/project/"
     env.MW_REMOTE_BUILD_CACHE_NAME = "Jenkins_padv24b01"
     env.MW_PIPELINE_GEN_DIRECTORY = "_pipelineGen_"
