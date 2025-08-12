@@ -1,10 +1,10 @@
 // Copyright 2025 The MathWorks, Inc.
 node('padv_win_agents'){
     // For the online configuration guide visit: https://www.mathworks.com/help/slcheck/padv/ug/integrate-process-into-jenkins-with-artifact-management.html
-    env.MW_SUPPORT_PACKAGE_ROOT = 'D:/sb/Bslcicd_0805/matlab';
+    env.MW_SUPPORT_PACKAGE_ROOT = 'D:/sb/r24b0811/matlab'
     // env.MW_RELATIVE_PROJECT_PATH = "level1-a/level2/ProcessAdvisorProjectReferenceExample/";  // e.g. "" or "relative/path/to/project/"
-    env.MW_REMOTE_BUILD_CACHE_NAME = "Jenkins_padv24b01"; 
-    env.MW_PIPELINE_GEN_DIRECTORY = "_pipelineGen_";
+    env.MW_REMOTE_BUILD_CACHE_NAME = "Jenkins_padv24b01"
+    env.MW_PIPELINE_GEN_DIRECTORY = "_pipelineGen_"
     // Note: You should never hardcode secrets or tokens in the Jenkinsfile.
     // For JFrog Artifactory storage services, You need to set the JFrog API token in Jenkins credentials with 'ARTIFACTORY_API_TOKEN_SECRET' ID.
     // withCredentials([string( credentialsId: 'ARTIFACTORY_API_TOKEN_SECRET',variable: 'artifactory_api_token')]) {
@@ -16,30 +16,30 @@ node('padv_win_agents'){
     // }
     // For Azure Blob storage services, you need to set the Azure storage account connection string in Jenkins credentials with the 'AZ_CONNECTION_STRING_SECRET' ID.
     withCredentials([string( credentialsId: 'AZ_CONNECTION_STRING_SECRET',variable: 'az_connection_string')]) {
-        env.AZ_CONNECTION_STRING = az_connection_string;
+        env.AZ_CONNECTION_STRING = az_connection_string
     }
     
     // withCredentials([string( credentialsId: 'MLM_LICENSE_TOKEN_SECRET',variable: 'mlm_license_token')]) {
-    //     env.MLM_LICENSE_TOKEN = mlm_license_token;
+    //     env.MLM_LICENSE_TOKEN = mlm_license_token; 
     // }
 
     def pipelineGenerationPath = "${env.MW_RELATIVE_PROJECT_PATH?:''}${env.MW_PIPELINE_GEN_DIRECTORY}";
     stage('Pipeline Generation'){
-        cleanWs();def scmVars=checkout scm;
+        cleanWs(disableDeferredWipeout:true, deleteDirs:true);def scmVars=checkout scm;
         // docker.image("slcicd.azurecr.io/slcheck/padv-ci:r2024b_apr25t_ci_spkg20250802").inside(){
-            // Loading pipeline utilities script
-            def command = "cp -r $MW_SUPPORT_PACKAGE_ROOT/toolbox/padv/pipeline_generator/ci/templates/jenkins/MW_PipelineUtils.groovy $WORKSPACE";
-            def isUnixEnvironment = isUnix();
-            if (isUnixEnvironment == true){ sh(command) } else { bat(command)}
-            def pipelineUtils = load "$WORKSPACE/MW_PipelineUtils.groovy";
+        // Loading pipeline utilities script
+        def command = "cp -r $MW_SUPPORT_PACKAGE_ROOT/toolbox/padv/pipeline_generator/ci/templates/jenkins/MW_PipelineUtils.groovy $WORKSPACE"
+        def isUnixEnvironment = isUnix()
+        if (isUnixEnvironment == true){ sh(command) } else { bat(command)}
+        def pipelineUtils = load("$WORKSPACE/MW_PipelineUtils.groovy")
 
-            // Generating Process Advisor's process pipeline
-            pipelineUtils.runShellCommand("matlab -batch \"addpath('$WORKSPACE/pipelines');generate_jenkins_pipeline();\"", isUnixEnvironment);
-            stash(includes:"${pipelineGenerationPath}/**", name:'pipeline_generated_files');
-            archiveArtifacts artifacts: "${pipelineGenerationPath}/**", allowEmptyArchive: true
-            pipelineUtils.loadEnvVariables(isUnixEnvironment, scmVars.GIT_COMMIT);
+        // Generating Process Advisor's process pipeline
+        pipelineUtils.runShellCommand("matlab -batch \"addpath('$WORKSPACE/pipelines');generate_jenkins_pipeline();\"", isUnixEnvironment)
+        stash includes:"${pipelineGenerationPath}/**", name:'pipeline_generated_files'
+        archiveArtifacts artifacts: "${pipelineGenerationPath}/**", allowEmptyArchive: true
+        pipelineUtils.loadEnvVariables(isUnixEnvironment, scmVars.GIT_COMMIT)
         // }
     }
 
-    load "$WORKSPACE/${pipelineGenerationPath}/simulink_pipeline";
+    load("$WORKSPACE/${pipelineGenerationPath}/simulink_pipeline")
 }
