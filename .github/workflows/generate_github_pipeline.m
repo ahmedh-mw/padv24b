@@ -11,7 +11,7 @@ function generate_github_pipeline()
     op.RunprocessCommandOptions.GenerateJUnitForProcess = true;
     op.ReportPath = "$PROJECTROOT$/PA_Results/Report/ProcessAdvisorReport";
     % op.RelativeProjectPath = "level1-a/level2/ProcessAdvisorProjectReferenceExample/";
-    op.RemoteBuildCacheName = "GitHub_Project1";
+    op.RemoteBuildCacheName = "GitHub_Project2";
     op.CacheFallbackBranches = ["master", "main", "develop"];
 
     % We can enhance the vaidation now of the options on the matlab side
