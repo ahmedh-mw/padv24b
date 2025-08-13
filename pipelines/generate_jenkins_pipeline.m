@@ -9,7 +9,7 @@ function generate_jenkins_pipeline()
 
     cp = openProject(strcat(workspace,filesep,string(relativeProjectPath)));
     op = padv.pipeline.JenkinsOptions;
-    op.AgentLabel = "padv_win_agents";
+    op.AgentLabel = "padv_wsl_agents";
     op.PipelineArchitecture = "IndependentModelPipelines";
     op.GeneratorVersion = 2;
     op.SupportPackageRoot = supportPackageRoot;
@@ -28,15 +28,15 @@ function generate_jenkins_pipeline()
     % op.S3BucketName = '<AWS S3 bucket name>';
     % op.S3AwsAccessKeyID = '<AWS S3 access key id>';
     op.AzContainerName = 'padvblobcontainer';
-    % op.RunnerType = "container";          % default/container
-    % op.ImageTag = 'slcicd.azurecr.io/slcheck/padv-ci:r2024b_apr25t_ci_spkg20250802';
+    op.RunnerType = "container";              % default/container
+    op.ImageTag = 'slcicd.azurecr.io/slcheck/padv-ci:r2024b_apr25t_ci_spkg20250813';
     % op.ImageArgs = "<Docker container arguments>";
     
     % Docker image settings
     op.UseMatlabPlugin = false;
-    % op.MatlabLaunchCmd = "xvfb-run -a matlab-batch"; 
+    op.MatlabLaunchCmd = "xvfb-run -a matlab-batch"; 
     % op.MatlabLaunchCmd = "matlab"; 
-    % op.MatlabStartupOptions = "";
-    % op.AddBatchStartupOption = false;
+    op.MatlabStartupOptions = "";
+    op.AddBatchStartupOption = false;
     padv.pipeline.generatePipeline(op, "CIPipeline");
 end
