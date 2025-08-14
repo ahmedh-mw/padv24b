@@ -10,7 +10,7 @@ on: # You must define at least one trigger for each workflow.
     # reopened: This triggers the workflow when a previously closed pull request is reopened
     types: [opened, synchronize, reopened]
 env:
-  MW_SUPPORT_PACKAGE_ROOT: 'D:/sb/r24b0811/matlab'
+  MW_SUPPORT_PACKAGE_ROOT: '/home/matlab/Documents/MATLAB/SupportPackages/R2024b'
   MW_RELATIVE_PROJECT_PATH: ''
   MW_PIPELINE_GEN_DIRECTORY: "_pipelineGen_" 
   # Note: You should never hardcode secrets or tokens in the YAML file.
@@ -19,7 +19,11 @@ env:
   # For Azure Blob storage services, you need to set the Azure storage account connection string in GitHub repository secrets with the 'AZ_CONNECTION_STRING_SECRET' ID. 
 jobs:
   build_files:
-    runs-on: 'padv_win_agents'
+    runs-on: 'padv_wsl_agents' 
+    container:
+      image: 'slcicd.azurecr.io/slcheck/padv-ci:r2024b_apr25t_ci_spkg20250813' 
+    env:
+      HOME: /home/matlab
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,29 +80,15 @@ jobs:
     with:
       job-name: FindLibraryClones_AHRS_Voter 
   
-  padv_builtin_task_DetectDesignErrors_AHRS_Voter:
-    needs: [FindLibraryClones_AHRS_Voter]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_DetectDesignErrors_AHRS_Voter 
-  
   padv_builtin_task_GenerateModelComparison_AHRS_Voter:
-    needs: [padv_builtin_task_DetectDesignErrors_AHRS_Voter]
+    needs: [FindLibraryClones_AHRS_Voter]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateModelComparison_AHRS_Voter 
   
-  padv_builtin_task_GenerateSDDReport_AHRS_Voter:
-    needs: [padv_builtin_task_GenerateModelComparison_AHRS_Voter]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_GenerateSDDReport_AHRS_Voter 
-  
   padv_builtin_task_RunTestsPerTestCase_AHRS_Voter:
-    needs: [padv_builtin_task_GenerateSDDReport_AHRS_Voter]
+    needs: [padv_builtin_task_GenerateModelComparison_AHRS_Voter]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
@@ -124,27 +114,6 @@ jobs:
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateCode_AHRS_Voter 
-  
-  Reference_Model_Code_Analysis_AHRS_Voter:
-    needs: [padv_builtin_task_GenerateCode_AHRS_Voter]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Reference_Model_Code_Analysis_AHRS_Voter 
-  
-  RefProveCodeQuality_AHRS_Voter:
-    needs: [Reference_Model_Code_Analysis_AHRS_Voter]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: RefProveCodeQuality_AHRS_Voter 
-  
-  padv_builtin_task_RunCodeInspection_AHRS_Voter:
-    needs: [RefProveCodeQuality_AHRS_Voter]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_RunCodeInspection_AHRS_Voter 
   
   padv_builtin_task_CollectMetrics_Actuator_Control:
     needs: [start]
@@ -181,29 +150,15 @@ jobs:
     with:
       job-name: FindLibraryClones_Actuator_Control 
   
-  padv_builtin_task_DetectDesignErrors_Actuator_Control:
-    needs: [FindLibraryClones_Actuator_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_DetectDesignErrors_Actuator_Control 
-  
   padv_builtin_task_GenerateModelComparison_Actuator_Control:
-    needs: [padv_builtin_task_DetectDesignErrors_Actuator_Control]
+    needs: [FindLibraryClones_Actuator_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateModelComparison_Actuator_Control 
   
-  padv_builtin_task_GenerateSDDReport_Actuator_Control:
-    needs: [padv_builtin_task_GenerateModelComparison_Actuator_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_GenerateSDDReport_Actuator_Control 
-  
   ModelTestingMetrics_Actuator_Control:
-    needs: [padv_builtin_task_GenerateSDDReport_Actuator_Control]
+    needs: [padv_builtin_task_GenerateModelComparison_Actuator_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
@@ -215,27 +170,6 @@ jobs:
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateCode_Actuator_Control 
-  
-  Reference_Model_Code_Analysis_Actuator_Control:
-    needs: [padv_builtin_task_GenerateCode_Actuator_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Reference_Model_Code_Analysis_Actuator_Control 
-  
-  RefProveCodeQuality_Actuator_Control:
-    needs: [Reference_Model_Code_Analysis_Actuator_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: RefProveCodeQuality_Actuator_Control 
-  
-  padv_builtin_task_RunCodeInspection_Actuator_Control:
-    needs: [RefProveCodeQuality_Actuator_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_RunCodeInspection_Actuator_Control 
   
   padv_builtin_task_CollectMetrics_Flight_Control:
     needs: [start]
@@ -272,26 +206,12 @@ jobs:
     with:
       job-name: FindLibraryClones_Flight_Control 
   
-  padv_builtin_task_DetectDesignErrors_Flight_Control:
+  padv_builtin_task_GenerateModelComparison_Flight_Control:
     needs: [FindLibraryClones_Flight_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
-      job-name: padv_builtin_task_DetectDesignErrors_Flight_Control 
-  
-  padv_builtin_task_GenerateModelComparison_Flight_Control:
-    needs: [padv_builtin_task_DetectDesignErrors_Flight_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
       job-name: padv_builtin_task_GenerateModelComparison_Flight_Control 
-  
-  padv_builtin_task_GenerateSDDReport_Flight_Control:
-    needs: [padv_builtin_task_GenerateModelComparison_Flight_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_GenerateSDDReport_Flight_Control 
   
   padv_builtin_task_CollectMetrics_InnerLoop_Control:
     needs: [start]
@@ -328,29 +248,15 @@ jobs:
     with:
       job-name: FindLibraryClones_InnerLoop_Control 
   
-  padv_builtin_task_DetectDesignErrors_InnerLoop_Control:
-    needs: [FindLibraryClones_InnerLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_DetectDesignErrors_InnerLoop_Control 
-  
   padv_builtin_task_GenerateModelComparison_InnerLoop_Control:
-    needs: [padv_builtin_task_DetectDesignErrors_InnerLoop_Control]
+    needs: [FindLibraryClones_InnerLoop_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateModelComparison_InnerLoop_Control 
   
-  padv_builtin_task_GenerateSDDReport_InnerLoop_Control:
-    needs: [padv_builtin_task_GenerateModelComparison_InnerLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_GenerateSDDReport_InnerLoop_Control 
-  
   ModelTestingMetrics_InnerLoop_Control:
-    needs: [padv_builtin_task_GenerateSDDReport_InnerLoop_Control]
+    needs: [padv_builtin_task_GenerateModelComparison_InnerLoop_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
@@ -362,27 +268,6 @@ jobs:
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateCode_InnerLoop_Control 
-  
-  Reference_Model_Code_Analysis_InnerLoop_Control:
-    needs: [padv_builtin_task_GenerateCode_InnerLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Reference_Model_Code_Analysis_InnerLoop_Control 
-  
-  RefProveCodeQuality_InnerLoop_Control:
-    needs: [Reference_Model_Code_Analysis_InnerLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: RefProveCodeQuality_InnerLoop_Control 
-  
-  padv_builtin_task_RunCodeInspection_InnerLoop_Control:
-    needs: [RefProveCodeQuality_InnerLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_RunCodeInspection_InnerLoop_Control 
   
   padv_builtin_task_CollectMetrics_OuterLoop_Control:
     needs: [start]
@@ -419,29 +304,15 @@ jobs:
     with:
       job-name: FindLibraryClones_OuterLoop_Control 
   
-  padv_builtin_task_DetectDesignErrors_OuterLoop_Control:
-    needs: [FindLibraryClones_OuterLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_DetectDesignErrors_OuterLoop_Control 
-  
   padv_builtin_task_GenerateModelComparison_OuterLoop_Control:
-    needs: [padv_builtin_task_DetectDesignErrors_OuterLoop_Control]
+    needs: [FindLibraryClones_OuterLoop_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
       job-name: padv_builtin_task_GenerateModelComparison_OuterLoop_Control 
   
-  padv_builtin_task_GenerateSDDReport_OuterLoop_Control:
-    needs: [padv_builtin_task_GenerateModelComparison_OuterLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_GenerateSDDReport_OuterLoop_Control 
-  
   padv_builtin_task_RunTestsPerTestCase_OuterLoop_Control:
-    needs: [padv_builtin_task_GenerateSDDReport_OuterLoop_Control]
+    needs: [padv_builtin_task_GenerateModelComparison_OuterLoop_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
@@ -468,57 +339,15 @@ jobs:
     with:
       job-name: padv_builtin_task_GenerateCode_OuterLoop_Control 
   
-  Reference_Model_Code_Analysis_OuterLoop_Control:
-    needs: [padv_builtin_task_GenerateCode_OuterLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Reference_Model_Code_Analysis_OuterLoop_Control 
-  
-  RefProveCodeQuality_OuterLoop_Control:
-    needs: [Reference_Model_Code_Analysis_OuterLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: RefProveCodeQuality_OuterLoop_Control 
-  
-  padv_builtin_task_RunCodeInspection_OuterLoop_Control:
-    needs: [RefProveCodeQuality_OuterLoop_Control]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: padv_builtin_task_RunCodeInspection_OuterLoop_Control 
-  
   Top_Model_Code_Generation:
-    needs: [padv_builtin_task_RunCodeInspection_AHRS_Voter, padv_builtin_task_RunCodeInspection_Actuator_Control, padv_builtin_task_GenerateSDDReport_Flight_Control, padv_builtin_task_RunCodeInspection_InnerLoop_Control, padv_builtin_task_RunCodeInspection_OuterLoop_Control]
+    needs: [padv_builtin_task_GenerateCode_AHRS_Voter, padv_builtin_task_GenerateCode_Actuator_Control, padv_builtin_task_GenerateModelComparison_Flight_Control, padv_builtin_task_GenerateCode_InnerLoop_Control, padv_builtin_task_GenerateCode_OuterLoop_Control]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
       job-name: Top_Model_Code_Generation 
   
-  Top_Model_Code_Analysis:
-    needs: [Top_Model_Code_Generation]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Top_Model_Code_Analysis 
-  
-  TopProveCodeQuality:
-    needs: [Top_Model_Code_Analysis]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: TopProveCodeQuality 
-  
-  Top_Model_Code_Inspection:
-    needs: [TopProveCodeQuality]
-    uses: ./.github/workflows/generic-job.yml
-    secrets: inherit
-    with:
-      job-name: Top_Model_Code_Inspection 
-  
   padv_builtin_task_GenerateRequirementsReport:
-    needs: [Top_Model_Code_Inspection]
+    needs: [Top_Model_Code_Generation]
     uses: ./.github/workflows/generic-job.yml
     secrets: inherit
     with:
