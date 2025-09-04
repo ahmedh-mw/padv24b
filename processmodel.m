@@ -10,17 +10,17 @@ function processmodel(pm)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
     includeModelMaintainabilityMetricTask = true;
-    includeModelTestingMetricTask = true;
-    includeModelStandardsTask = true;
+    includeModelTestingMetricTask = false;
+    includeModelStandardsTask = false;
     includeDesignErrorDetectionTask = false;        % (Not working with containers)
-    includeFindClones = true;
-    includeModelComparisonTask = true;
+    includeFindClones = false;
+    includeModelComparisonTask = false;
     includeSDDTask = false;                          % (Not working with containers)
     includeSimulinkWebViewTask = true;
-    includeTestsPerTestCaseTask = true;
-    includeMergeTestResultsTask = true;
-    includeRefGenerateCodeTask = true;
-    includeTopGenerateCodeTask = true; % Project Level Top-Model code generation
+    includeTestsPerTestCaseTask = false;
+    includeMergeTestResultsTask = false;
+    includeRefGenerateCodeTask = false;
+    includeTopGenerateCodeTask = false; % Project Level Top-Model code generation
     % Not supported in mpm / docker images
     includeRefAnalyzeModelCode = false && ~padv.internal.util.isMACA64 && exist('polyspaceroot','file');
     includeTopAnalyzeModelCode = false && ~padv.internal.util.isMACA64 && exist('polyspaceroot','file'); % Project Level Top-Model code analysis
@@ -28,7 +28,7 @@ function processmodel(pm)
     includeTopProveCodeQuality = false && ~padv.internal.util.isMACA64 && (~isempty(ver('pscodeprover')) || ~isempty(ver('pscodeproverserver')));% Project Level Top-Model code proving
     includeRefCodeInspection = false;            % Not included in docker image by default
     includeTopCodeInspection = false;            % Not included in docker image by default
-    includeGenerateRequirementsReport = true;
+    includeGenerateRequirementsReport = false;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Define Shared Path Variables
