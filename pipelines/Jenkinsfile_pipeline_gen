@@ -1,8 +1,7 @@
 // Copyright 2025 The MathWorks, Inc.
 node('padv_win_agents'){
     // For the online configuration guide visit: https://www.mathworks.com/help/slcheck/padv/ug/integrate-process-into-jenkins-with-artifact-management.html
-    // env.MW_SUPPORT_PACKAGE_ROOT = 'D:/sb/r24b0811/matlab'
-    env.MW_SUPPORT_PACKAGE_ROOT = "G:/70/ahmedh.BR2024bd.j2986979.52/matlab"
+    env.MW_SUPPORT_PACKAGE_ROOT = "G:/70/ahmedh.BR2024bd.j2986979.52/matlab"      // "/home/matlab/Documents/MATLAB/SupportPackages/R2024b"
     // env.MW_RELATIVE_PROJECT_PATH = "level1-a/level2/ProcessAdvisorProjectReferenceExample/";  // e.g. "" or "relative/path/to/project/"
     env.MW_REMOTE_BUILD_CACHE_NAME = "Jenkins_root"
     env.MW_PIPELINE_GEN_DIRECTORY = "_pipelineGen_"
@@ -27,7 +26,6 @@ node('padv_win_agents'){
     def pipelineGenerationPath = "${env.MW_RELATIVE_PROJECT_PATH?:''}${env.MW_PIPELINE_GEN_DIRECTORY}";
     stage('Pipeline Generation'){
         cleanWs(disableDeferredWipeout:true, deleteDirs:true);def scmVars=checkout scm;
-      // docker.image("slcicd.azurecr.io/slcheck/padv-ci:r2024b_apr25t_ci_spkg20250813").inside(){
         // Loading pipeline utilities script
         def command = "cp -r $MW_SUPPORT_PACKAGE_ROOT/toolbox/padv/pipeline_generator/ci/templates/jenkins/MW_PipelineUtils.groovy $WORKSPACE"
         def isUnixEnvironment = isUnix()
@@ -39,7 +37,6 @@ node('padv_win_agents'){
         stash includes:"${pipelineGenerationPath}/**", name:'pipeline_generated_files'
         archiveArtifacts artifacts: "${pipelineGenerationPath}/**", allowEmptyArchive: true
         pipelineUtils.loadEnvVariables(isUnixEnvironment, scmVars.GIT_COMMIT)
-      // }
     }
 
     load("$WORKSPACE/${pipelineGenerationPath}/simulink_pipeline")
