@@ -4,7 +4,7 @@ function generate_github_pipeline()
     op = padv.pipeline.GitHubOptions;
     op.PipelineArchitecture = "IndependentModelPipelines";
     op.GeneratorVersion = 2;
-    op.SupportPackageRoot = "D:/sb/r24b0811/matlab";
+    op.SupportPackageRoot = "C:/ProgramData/MATLAB/SupportPackages/R2024b";
     op.RunnerLabels = "padv_win_agents";
     op.GeneratedPipelineDirectory = "_pipelineGen_";
     op.StopOnStageFailure = true;
