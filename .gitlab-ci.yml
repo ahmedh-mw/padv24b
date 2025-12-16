@@ -10,12 +10,12 @@ variables:
   # SUPPORT_PACKAGE_ROOT: "D:/sb/r24b_0402/matlab"
   # SUPPORT_PACKAGE_ROOT: "C:/Data/nrepos/bslcicd/matlab"
   # SUPPORT_PACKAGE_ROOT: "/mathworks/devel/sbs/70/ahmedh.BR2024bd.j2959559.73/matlab"
-  SUPPORT_PACKAGE_ROOT: "/home/matlab/Documents/MATLAB/SupportPackages/R2024b"
+  # SUPPORT_PACKAGE_ROOT: "/home/matlab/Documents/MATLAB/SupportPackages/R2024b"
+  SUPPORT_PACKAGE_ROOT: "C:/ProgramData/MATLAB/SupportPackages/R2024b"
   # SUPPORT_PACKAGE_ROOT: "/opt/packages"
   # MATLAB_INSTALLATION_PATH: "D:/sb/r24b_0402/matlab/bin"  # Path to MATLAB installation directory
   # MATLAB_INSTALLATION_PATH: "C:/Program Files/MATLAB/R2024b/bin"  # Path to MATLAB installation directory
   # MATLAB_INSTALLATION_PATH: "/mathworks/devel/sbs/70/ahmedh.BR2024bd.j2959559.73/matlab/bin"
-  MATLAB_INSTALLATION_PATH: "matlab_bin_path"
   ARTIFACT_SERVICE_MODE: azure_blob         # jfrog/network/s3/azure_blob
   # NETWORK_STORAGE_PATH: C:/Data/artifactory
   # ARTIFACTORY_URL: http://mathworks-v4rgb:8082/artifactory
@@ -35,9 +35,9 @@ variables:
   PROJECT_NAME: "${CI_PIPELINE_NAME}"
   # IMAGE_TAG: padv:R2024b_j2959559_73v2
   # IMAGE_TAG: package-non-interactive:r2024b_apr
-  IMAGE_TAG: slcicd.azurecr.io/slcheck/padv-non-interactive:r2024b_apr25_ci_spkg20250619
+  # IMAGE_TAG: slcicd.azurecr.io/slcheck/padv-non-interactive:r2024b_apr25_ci_spkg20250619
   # SUBMODULES_MODE: true
-  MLM_LICENSE_TOKEN: "$MLM_LICENSE_TOKEN_SECRET"
+  # MLM_LICENSE_TOKEN: "$MLM_LICENSE_TOKEN_SECRET"
   PROJECT_RELATIVE_PATH: ""      # "" or "level1-a/level2/ProcessAdvisorProjectReferenceExample/"
   BUILD_FOLDER: "$PROJECT_RELATIVE_PATH$BUILD_FOLDER_NAME"
 SimulinkPipelineGeneration:
@@ -54,7 +54,7 @@ SimulinkPipelineGeneration:
     - cp -r "$CI_UTIL/templates/gitlab/_build_" "$BUILD_FOLDER"
     - cp -r "$CI_UTIL/scripts" ./_scripts_ && cd _scripts_
     - .\SET_PATH "$MATLAB_INSTALLATION_PATH" "$CI_PROJECT_DIR/_scripts_" 2>$RUNNER_TEMP_PROJECT_DIR\_error_ || source ./SET_PATH "$MATLAB_INSTALLATION_PATH" "$CI_PROJECT_DIR/_scripts_"
-    - xvfb-run -a matlab-batch "addpath('$CI_PROJECT_DIR/pipelines');generate_gitlab_pipeline('$CI_PROJECT_DIR','$PROJECT_RELATIVE_PATH','$MATLAB_INSTALLATION_PATH','$RUNNER_LABEL','$BUILD_FOLDER_NAME');"
+    - matlab -batch "addpath('$CI_PROJECT_DIR/pipelines');generate_gitlab_pipeline('$CI_PROJECT_DIR','$PROJECT_RELATIVE_PATH','$MATLAB_INSTALLATION_PATH','$RUNNER_LABEL','$BUILD_FOLDER_NAME');"
     # - xvfb-run -a matlab -batch "addpath('$CI_PROJECT_DIR');generate_gitlab_pipeline('$CI_PROJECT_DIR','$MATLAB_INSTALLATION_PATH','$RUNNER_LABEL','$BUILD_FOLDER_NAME');"
     # - xvfb-run matlab-batch "addpath('$CI_PROJECT_DIR');generate_gitlab_pipeline('$CI_PROJECT_DIR','$MATLAB_INSTALLATION_PATH','$RUNNER_LABEL','$BUILD_FOLDER_NAME');"
     - call "$PYTHON_ALIAS" "$CI_UTIL/py/prepare.py" --pipeline_prepare --platform gitlab
