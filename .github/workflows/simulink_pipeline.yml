@@ -26,8 +26,8 @@ jobs:
       - name: Copy workflow files
         run: |
           mkdir "${{env.MW_RELATIVE_PROJECT_PATH}}${{env.MW_PIPELINE_GEN_DIRECTORY}}" 
-          cp "/path/to/ir_dag.json" "${{env.MW_RELATIVE_PROJECT_PATH}}${{env.MW_PIPELINE_GEN_DIRECTORY}}/" 
-          cp "/path/to/simulink_pipeline.yml" "${{env.MW_RELATIVE_PROJECT_PATH}}${{env.MW_PIPELINE_GEN_DIRECTORY}}/" 
+          cp ".github/workflows/ir_dag.json" "${{env.MW_RELATIVE_PROJECT_PATH}}${{env.MW_PIPELINE_GEN_DIRECTORY}}/" 
+          cp ".github/workflows/simulink_pipeline.yml" "${{env.MW_RELATIVE_PROJECT_PATH}}${{env.MW_PIPELINE_GEN_DIRECTORY}}/" 
       - name: Upload workflow files
         uses: actions/upload-artifact@v4
         with:
