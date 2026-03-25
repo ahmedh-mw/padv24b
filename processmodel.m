@@ -9,7 +9,7 @@ function processmodel(pm)
     %% Include/Exclude Tasks in processmodel
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-    includeModelMaintainabilityMetricTask = false;
+    includeModelMaintainabilityMetricTask = true;
     includeModelTestingMetricTask = false;
     includeModelStandardsTask = false;
     includeDesignErrorDetectionTask = false;        % Disabled
